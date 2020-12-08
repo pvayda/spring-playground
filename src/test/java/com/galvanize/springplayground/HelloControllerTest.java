@@ -56,5 +56,12 @@ public class HelloControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("30 / 5 = 6"));
     }
+    @Test
+    public void testSumEndpoint() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/sum?n=4&n=5&n=6");
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("4 + 5 + 6 = 15"));
+    }
 
 }

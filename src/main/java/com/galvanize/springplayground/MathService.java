@@ -1,11 +1,38 @@
 package com.galvanize.springplayground;
 
-public class CalcInput {
+import org.springframework.util.MultiValueMap;
+
+import java.util.List;
+
+public class MathService {
+    MultiValueMap<String, String> querystring;
     private String operation;
     private String opString;
     private int solution;
     private int x;
     private int y;
+    MathService(){
+
+    }
+    MathService(MultiValueMap<String, String> querystring){
+        this.querystring = querystring;
+    }
+    public String calcSum(){
+        int sum = 0;
+        String result = "";
+        List<String> values = querystring.get("n");
+        for (int i = 0; i < values.size(); i++){
+            if(i == values.size() - 1){
+                sum += Integer.parseInt(values.get(i));
+                result += values.get(i) + " = ";
+            } else {
+                sum += Integer.parseInt(values.get(i));
+                result += values.get(i) + " + ";
+            }
+        }
+        result += Integer.toString(sum);
+        return result;
+    }
     public String getOperation() {
         return operation;
     }
@@ -57,4 +84,5 @@ public class CalcInput {
             return x + y;
         }
     }
+
 }
