@@ -63,5 +63,13 @@ public class HelloControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("4 + 5 + 6 = 15"));
     }
+    ///math/volume/{height}/{width}/{length}
+    @Test
+    public void testCalcVolume() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/volume/3/3/3");
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x3x3 rectangle is 27"));
+    }
 
 }
