@@ -5,9 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @GetMapping("/")
+    @GetMapping("/hello")
     public String helloWorld() {
-        return "Hello from Spring!";
+        return "Hello World";
+    }
+    @GetMapping("/math/pi")
+    public String getPi(){
+        return "3.141592653589793";
     }
 
 }
