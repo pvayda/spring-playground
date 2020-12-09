@@ -1,6 +1,9 @@
 package com.galvanize.springplayground;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 import java.util.List;
@@ -9,6 +12,7 @@ public class Flight {
     private Date departs;
     private List<Ticket> tickets;
 
+    @JsonProperty("Departs")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "PST")
     public Date getDeparts() {
         return departs;
@@ -17,7 +21,7 @@ public class Flight {
     public void setDeparts(Date departs) {
         this.departs = departs;
     }
-
+    @JsonProperty("Tickets")
     public List<Ticket> getTickets() {
         return tickets;
     }
@@ -34,7 +38,7 @@ public class Flight {
             this.passengers = personList;
             this.price = price;
         }
-
+        @JsonProperty("Passengers")
         public List<Person> getPassengers() {
             return passengers;
         }
@@ -42,7 +46,7 @@ public class Flight {
         public void setPassengers(List<Person> passengers) {
             this.passengers = passengers;
         }
-
+        @JsonProperty("Price")
         public int getPrice() {
             return price;
         }
@@ -58,7 +62,7 @@ public class Flight {
             this.firstName = firstName;
             this.lastName = lastName;
         }
-
+        @JsonProperty("FirstName")
         public String getFirstName() {
             return firstName;
         }
@@ -66,7 +70,7 @@ public class Flight {
         public void setFirstName(String firstName) {
             this.firstName = firstName;
         }
-
+        @JsonIgnore
         public String getLastName() {
             return lastName;
         }
