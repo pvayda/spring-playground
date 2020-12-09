@@ -37,7 +37,7 @@ public class FlightControllerTest {
         this.mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.Departs", is("2017-04-21 14:34")))
-                .andExpect(jsonPath("$.Tickets.[0].Passengers.[0].FirstName", is("Jon")))
+                .andExpect(jsonPath("$.Tickets.[0].Passenger.FirstName", is("Jon")))
                 //.andExpect(jsonPath("$.Tickets.[0].Passengers.[0].lastName", is("Snow")))
                 .andExpect(jsonPath("$.Tickets.[0].Price", is(200)));
 
@@ -51,11 +51,11 @@ public class FlightControllerTest {
          this.mvc.perform(request)
                  .andExpect(status().isOk())
                  .andExpect(jsonPath("$[0].Departs", is("2017-04-21 14:34")))
-                 .andExpect(jsonPath("$[0].Tickets.[0].Passengers.[0].FirstName", is("Jon")))
+                 .andExpect(jsonPath("$[0].Tickets.[0].Passenger.FirstName", is("Jon")))
                  //.andExpect(jsonPath("$[0].Tickets.[0].Passengers.[0].lastName", is("Snow")))
                  .andExpect(jsonPath("$[0].Tickets.[0].Price", is(200)))
                  .andExpect(jsonPath("$[1].Departs", is("2017-02-21 14:34")))
-                 .andExpect(jsonPath("$[1].Tickets.[0].Passengers.[0].FirstName", is("Luke")))
+                 .andExpect(jsonPath("$[1].Tickets.[0].Passenger.FirstName", is("Luke")))
                  //.andExpect(jsonPath("$[1].Tickets.[0].Passengers.[0].lastName", is("Skywalker")))
                  .andExpect(jsonPath("$[1].Tickets.[0].Price", is(400)));
 

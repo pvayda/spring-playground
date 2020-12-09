@@ -31,20 +31,20 @@ public class Flight {
     }
 
     public static class Ticket{
-        private List<Person> passengers;
+        private Person passenger;
         private int price;
 
-        public Ticket(List<Person> personList, int price) {
-            this.passengers = personList;
+        public Ticket(Person person, int price) {
+            this.passenger = person;
             this.price = price;
         }
-        @JsonProperty("Passengers")
-        public List<Person> getPassengers() {
-            return passengers;
+        @JsonProperty("Passenger")
+        public Person getPassenger() {
+            return passenger;
         }
 
-        public void setPassengers(List<Person> passengers) {
-            this.passengers = passengers;
+        public void setPassenger(Person passenger) {
+            this.passenger = passenger;
         }
         @JsonProperty("Price")
         public int getPrice() {
