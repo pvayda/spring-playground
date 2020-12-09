@@ -42,7 +42,7 @@ public class HelloController {
 
     //type=rectangle&width=4&height=7
     //Area of a 4x7 rectangle is 28
-    @PostMapping(path = "/math/area", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(path = "/math/area")
     public String calcArea(CalcArea calcArea){
         String type = calcArea.getType();
         return calcArea.printArea();
