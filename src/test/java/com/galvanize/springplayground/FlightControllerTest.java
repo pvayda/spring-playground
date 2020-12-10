@@ -1,5 +1,6 @@
 package com.galvanize.springplayground;
 
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -7,6 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.json.simple.parser.JSONParser;
+
+import java.io.FileReader;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -113,6 +117,19 @@ public class FlightControllerTest {
                         "}"))
                 .andExpect(status().isOk())
                 //.andExpect(content().string("Hello"));
+                .andExpect(jsonPath("$.result", is(350)));
+
+    }
+    @Test
+    public void getTotalPriceFromFile() throws Exception {
+        FileReader reader = new FileReader("jsonTest.json");
+        JSONParser jsonParser = new JSONParser();
+        Object obj = jsonParser.parse(reader);
+        JSONObject jsonObject = (JSONObject) obj;
+        this.mvc.perform(post("/flights/tickets/total")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonObject.toJSONString()))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is(350)));
 
     }

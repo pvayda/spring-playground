@@ -56,10 +56,7 @@ public class FlightController {
     //POST request to /flights/tickets/total
     @PostMapping("/flights/tickets/total")
     public String getTotalPrice(@RequestBody Flight flight) throws Exception{
-
         return flight.calcTicketTotal();
-
-        //return "{ 'result': 350}";
 
     }
 
