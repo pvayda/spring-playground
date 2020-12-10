@@ -10,8 +10,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FlightController.class)
 public class FlightControllerTest {
@@ -37,10 +36,11 @@ public class FlightControllerTest {
                 .contentType(MediaType.APPLICATION_JSON);
         this.mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.Departs", is("2017-04-21 14:34")))
-                .andExpect(jsonPath("$.Tickets.[0].Passenger.FirstName", is("Jon")))
+                //.andExpect(content().string("Hello"))
+                .andExpect(jsonPath("$.departs", is("2017-04-21 14:34")))
+                .andExpect(jsonPath("$.tickets.[0].passenger.firstName", is("Jon")))
                 //.andExpect(jsonPath("$.Tickets.[0].Passengers.[0].lastName", is("Snow")))
-                .andExpect(jsonPath("$.Tickets.[0].Price", is(200)));
+                .andExpect(jsonPath("$.tickets.[0].price", is(200)));
 
     }
      //'/flights'
@@ -51,17 +51,33 @@ public class FlightControllerTest {
                  .contentType(MediaType.APPLICATION_JSON);
          this.mvc.perform(request)
                  .andExpect(status().isOk())
-                 .andExpect(jsonPath("$[0].Departs", is("2017-04-21 14:34")))
-                 .andExpect(jsonPath("$[0].Tickets.[0].Passenger.FirstName", is("Jon")))
+                 //.andExpect(content().string("Hello"))
+                 .andExpect(jsonPath("$.[0].departs", is("2017-04-21 14:34")))
+                 .andExpect(jsonPath("$.[0].tickets.[0].passenger.firstName", is("Jon")))
                  //.andExpect(jsonPath("$[0].Tickets.[0].Passengers.[0].lastName", is("Snow")))
-                 .andExpect(jsonPath("$[0].Tickets.[0].Price", is(200)))
-                 .andExpect(jsonPath("$[1].Departs", is("2017-02-21 14:34")))
-                 .andExpect(jsonPath("$[1].Tickets.[0].Passenger.FirstName", is("Luke")))
+                 .andExpect(jsonPath("$.[0].tickets.[0].price", is(200)))
+                 .andExpect(jsonPath("$.[1].departs", is("2017-02-21 14:34")))
+                 .andExpect(jsonPath("$.[1].tickets.[0].passenger.firstName", is("Luke")))
                  //.andExpect(jsonPath("$[1].Tickets.[0].Passengers.[0].lastName", is("Skywalker")))
-                 .andExpect(jsonPath("$[1].Tickets.[0].Price", is(400)));
+                 .andExpect(jsonPath("$.[1].tickets.[0].price", is(400)));
 
 
      }
+     @Test
+    public void testPostPerson() throws Exception {
+         this.mvc.perform(post("/flights/person")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"firstName\": \"Jon\", \"lastName\": \"Snow\"}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"firstName\":\"Jon\",\"lastName\":\"Snow\"}"));
+    }
+    @Test public void testPostTicket() throws Exception {
+        this.mvc.perform(post("/flights/ticket")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"passenger\": {\"firstName\": \"Jon\",\"lastName\": \"Snow\"}, \"price\": 200}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"passenger\":{\"firstName\":\"Jon\",\"lastName\":\"Snow\"},\"price\":200}"));
+    }
     @Test
     public void testGetTotalPrice() throws Exception {
 //        RequestBuilder request = post("/flights/tickets/total")
@@ -78,10 +94,13 @@ public class FlightControllerTest {
 //                        "}" +
 //                        "]" +
 //                        "}");
+//        FileReader reader = new FileReader("jsonTest.json");
+//        JSONParser json = new JSONParser();
+
         this.mvc.perform(post("/flights/tickets/total")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"tickets\": [{\"passenger\": {\"firstName\": \"Some name\",\"lastName\": \"Some other name\"" +
-                        "}\"price\": 200" +
+                        "},\"price\": 200" +
                         "}," +
                         "{" +
                         "\"passenger\": {" +
@@ -93,6 +112,7 @@ public class FlightControllerTest {
                         "]" +
                         "}"))
                 .andExpect(status().isOk())
+                //.andExpect(content().string("Hello"));
                 .andExpect(jsonPath("$.result", is(350)));
 
     }
