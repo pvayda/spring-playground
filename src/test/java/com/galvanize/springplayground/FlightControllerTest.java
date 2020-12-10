@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,8 +33,8 @@ public class FlightControllerTest {
     @Test
     public void testGetSingleFlight() throws Exception{
         RequestBuilder request = MockMvcRequestBuilders.get("/flights/flight")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .contentType(MediaType.APPLICATION_JSON_UTF8);
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
         this.mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.Departs", is("2017-04-21 14:34")))
@@ -46,8 +47,8 @@ public class FlightControllerTest {
      @Test
      public void testGetFlights() throws Exception{
          RequestBuilder request = MockMvcRequestBuilders.get("/flights")
-                 .accept(MediaType.APPLICATION_JSON_UTF8)
-                 .contentType(MediaType.APPLICATION_JSON_UTF8);
+                 .accept(MediaType.APPLICATION_JSON)
+                 .contentType(MediaType.APPLICATION_JSON);
          this.mvc.perform(request)
                  .andExpect(status().isOk())
                  .andExpect(jsonPath("$[0].Departs", is("2017-04-21 14:34")))
@@ -61,5 +62,38 @@ public class FlightControllerTest {
 
 
      }
+    @Test
+    public void testGetTotalPrice() throws Exception {
+//        RequestBuilder request = post("/flights/tickets/total")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\"tickets\": [{\"passenger\": {\"firstName\": \"Some name\",\"lastName\": \"Some other name\"" +
+//                        "}\"price\": 200" +
+//                        "}," +
+//                        "{" +
+//                        "\"passenger\": {" +
+//                        "\"firstName\": \"Name B\"," +
+//                        "\"lastName\": \"Name C\"" +
+//                        "}," +
+//                        "\"price\": 150" +
+//                        "}" +
+//                        "]" +
+//                        "}");
+        this.mvc.perform(post("/flights/tickets/total")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"tickets\": [{\"passenger\": {\"firstName\": \"Some name\",\"lastName\": \"Some other name\"" +
+                        "}\"price\": 200" +
+                        "}," +
+                        "{" +
+                        "\"passenger\": {" +
+                        "\"firstName\": \"Name B\"," +
+                        "\"lastName\": \"Name C\"" +
+                        "}," +
+                        "\"price\": 150" +
+                        "}" +
+                        "]" +
+                        "}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result", is(350)));
 
+    }
 }
