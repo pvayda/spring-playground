@@ -17,6 +17,9 @@ dependencies {
 	compile 'com.googlecode.json-simple:json-simple:1.1.1'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.3.1.RELEASE'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.20'
+	compile group: 'org.springframework.data', name: 'spring-data-jdbc', version: '2.1.2'
 }
 
 test {
