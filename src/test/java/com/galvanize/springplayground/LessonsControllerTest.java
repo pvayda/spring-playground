@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -67,5 +66,15 @@ public class LessonsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", instanceOf(Number.class)));
                 //.andExpect(jsonPath("$.title", equalTo("Spring Security")));
+    }
+    @Test
+    @Transactional
+    @Rollback
+    public void testGetByTitle() throws Exception {
+        MockHttpServletRequestBuilder request = get("/lessons/find/SQL")
+                .contentType(MediaType.APPLICATION_JSON);
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", instanceOf(Number.class)));
     }
 }

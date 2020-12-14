@@ -14,6 +14,7 @@ public class Lesson {
     private Long id;
     private String title;
 
+    public Lesson() {}
 
     @Column(columnDefinition = "date")
     @JsonFormat(pattern = "yyyy-MM-dd")
