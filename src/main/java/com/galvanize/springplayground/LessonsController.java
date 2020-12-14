@@ -39,4 +39,8 @@ public class LessonsController {
         return this.repository.save(lesson);
 
     }
+    @GetMapping("/find/{title}")
+    public Lesson readByTitle(@PathVariable String title){
+        return this.repository.findByTitle(title);
+    }
 }
