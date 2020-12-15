@@ -55,26 +55,26 @@ public class LessonsControllerTest {
                 .andExpect(jsonPath("$.id", instanceOf(Number.class)));
 
     }
-    @Test
-    @Transactional
-    @Rollback
-    public void testPatch() throws Exception {
-        MockHttpServletRequestBuilder request = patch("/lessons/3")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"title\":\"Spring Security\",\"deliveredOn\":\"2017-04-12\"}");
-        this.mvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", instanceOf(Number.class)));
-                //.andExpect(jsonPath("$.title", equalTo("Spring Security")));
-    }
-    @Test
-    @Transactional
-    @Rollback
-    public void testGetByTitle() throws Exception {
-        MockHttpServletRequestBuilder request = get("/lessons/find/SQL")
-                .contentType(MediaType.APPLICATION_JSON);
-        this.mvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", instanceOf(Number.class)));
-    }
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void testPatch() throws Exception {
+//        MockHttpServletRequestBuilder request = patch("/lessons/3")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\"title\":\"Spring Security\",\"deliveredOn\":\"2017-04-12\"}");
+//        this.mvc.perform(request)
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id", instanceOf(Number.class)));
+//                //.andExpect(jsonPath("$.title", equalTo("Spring Security")));
+//    }
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void testGetByTitle() throws Exception {
+//        MockHttpServletRequestBuilder request = get("/lessons/find/SQL")
+//                .contentType(MediaType.APPLICATION_JSON);
+//        this.mvc.perform(request)
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id", instanceOf(Number.class)));
+//    }
 }
